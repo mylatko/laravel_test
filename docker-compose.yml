@@ -36,10 +36,12 @@ services:
       - "3306:3306"
     container_name: l_mysql
     environment:
-          - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-          - DB_DATABASE=${DB_DATABASE}
-          - DB_USERNAME=${DB_USERNAME}
-          - DB_PASSWORD=${DB_PASSWORD}
+          DB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+          DB_DATABASE: ${DB_DATABASE}
+          DB_USERNAME: ${DB_USERNAME}
+          DB_PASSWORD: ${DB_PASSWORD}
+          DB_HOST: ${DB_HOST}
+          DB_PORT: ${DB_PORT}
 #    env_file:
 #      - ./.env
     volumes:
