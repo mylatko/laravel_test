@@ -1,0 +1,53 @@
+version: '3.0'
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - 9090:80
+    volumes:
+      - .:/var/www/laravel
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - php
+    networks:
+      - backend
+
+  php:
+    container_name: l_web
+    build:
+      context: ./docker/php
+    volumes:
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+      - .:/var/www/laravel
+    links:
+      - mysql
+    networks:
+      - backend
+    environment:
+        DB_DATABASE: ${DB_DATABASE}
+        DB_USERNAME: ${DB_USERNAME}
+        DB_PASSWORD: ${DB_PASSWORD}
+        DB_HOST: ${DB_HOST}
+        DB_PORT: ${DB_PORT}
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    container_name: l_mysql
+    environment:
+          - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+          - DB_DATABASE=${DB_DATABASE}
+          - DB_USERNAME=${DB_USERNAME}
+          - DB_PASSWORD=${DB_PASSWORD}
+#    env_file:
+#      - ./.env
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+#      - data:/var/lib/mysql
+#      - ./docker/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
+networks:
+  backend:
