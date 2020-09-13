@@ -1,7 +1,9 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
+        "scss:min": "node-sass resources/sass/app.scss public/css/app.css --output-style=compressed",
+        "scss:autoprefixer": "postcss public/css/app.css --use autoprefixer -o public/css/app.css",
+        "dev": "npm run scss:min & npm run scss:autoprefixer",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
         "watch-poll": "npm run watch -- --watch-poll",
@@ -11,9 +13,17 @@
     },
     "devDependencies": {
         "axios": "^0.19",
-        "cross-env": "^7.0",
+        "bootstrap": "^4.0.0",
+        "cross-env": "^7.0.2",
+        "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
         "lodash": "^4.17.19",
-        "resolve-url-loader": "^3.1.0"
+        "popper.js": "^1.12",
+        "resolve-url-loader": "^3.1.0",
+        "vue-template-compiler": "^2.6.12",
+        "autoprefixer": "^9.7.4",
+        "node-sass": "^4.13.1",
+        "nodemon": "^2.0.2",
+        "postcss-cli": "^7.1.0"
     }
 }
