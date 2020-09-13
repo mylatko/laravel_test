@@ -36,6 +36,7 @@
                             <tr>
                                 <th>Title</th>
                                 <th>Books count</th>
+                                <th>Appearance date</th>
                                 <th></th>
                             </tr>
                         @foreach ( $books as $book )
@@ -45,6 +46,9 @@
                                 </td>
                                 <td>
                                     {{ $book->count }}
+                                </td>
+                                <td>
+                                    {{ $book->appearance_date }}
                                 </td>
                                 <td>
                                     @auth

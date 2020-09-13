@@ -64,12 +64,15 @@ class RentController extends Controller
         $rent = new Rent();
         $rent->book_id = $book->id;
         $rent->user_id = $user->id;
-        $rent->count++;
+        $rent->count = 1;
         $rent->begin_date = date("Y-m-d");
         $rent->finish_date = date("Y-m-d", strtotime("+2 weeks"));
         $rent->save();
 
         $book->count--;
+        if ($book->count == 0) {
+            $book->appearance_date = $rent->finish_date;
+        }
         $book->save();
 
         return redirect('/')->with('status', 'Book in a rent!');
@@ -90,6 +93,9 @@ class RentController extends Controller
         }
 
         $rent->finish_date = date("Y-m-d", strtotime("+2 weeks"));
+        if ($book->count == 0) {
+            $book->appearance_date = $rent->finish_date;
+        }
         $rent->save();
 
         return redirect('/')->with('status', 'Rent successfully prolong!');
