@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y \
 	&& docker-php-ext-install pdo pdo_mysql mysqli \
 	&& docker-php-ext-install mbstring tokenizer
 
+RUN pecl install -o -f redis \
+&&  docker-php-ext-enable redis
+
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 #COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -23,3 +26,5 @@ COPY . /var/www
 COPY --chown=www:www . /var/www
 # Change current user to www
 USER www
+
+

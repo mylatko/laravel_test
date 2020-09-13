@@ -51,5 +51,19 @@ services:
     networks:
       - backend
 
+  redis:
+    container_name: l_redis
+    image: "redis:alpine"
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./docker/redis/redis-data:/var/lib/redis
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    networks:
+      - backend
+
 networks:
   backend:
